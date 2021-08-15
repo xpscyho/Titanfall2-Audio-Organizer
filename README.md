@@ -26,5 +26,6 @@ open this with Legion and extract it
 
 it will be in uncompressed .wav format so make sure you have 80GB of storage ready
 my tool can compress the files with ffmpeg, it takes around 30 minutes to an hour on my hardware 
+the compressed files come up to around 8 GB
 
 after it compresses the files, my thing will probably keep copying for the organization (WHICH IS NOT EVEN CLOSE TO DONE BTW) im adding it to github for some reason even though its not close to ready to share with other people lmoa
