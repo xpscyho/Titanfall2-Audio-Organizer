@@ -9,6 +9,8 @@ any way that gets it into path works i guess
 # TO DO
 
 - [ ] Redo the organization system lmao
+- [ ] make a mover operation so there wont be tons of duplicates once the .bat is done
+- [ ] add more groups
 
 # How to get the audio files from Titanfall 2
 
