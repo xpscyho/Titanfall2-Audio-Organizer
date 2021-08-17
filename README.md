@@ -5,6 +5,8 @@ The only prerequisite other than windows i can think of is ffmpeg
 i think you can pip install ffmpeg but im not sure 
 any way that gets it into path works i guess
 
+yeah the only prerequisite is ffmpeg being in path
+
 
 # TO DO
 
