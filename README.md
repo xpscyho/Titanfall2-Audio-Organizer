@@ -10,7 +10,7 @@ any way that gets it into path works i guess
 
 - [ ] Redo the organization system lmao
 - [ ] make a mover operation so there wont be tons of duplicates once the .bat is done
-- [ ] add more groups
+- [ ] add more groups, like grunt dialogue and sound effects
 
 # How to get the audio files from Titanfall 2
 
@@ -29,3 +29,8 @@ my tool can compress the files with ffmpeg, it takes around 30 minutes to an hou
 the compressed files come up to around 8 GB
 
 after it compresses the files, my thing will probably keep copying for the organization (WHICH IS NOT EVEN CLOSE TO DONE BTW) im adding it to github for some reason even though its not close to ready to share with other people lmoa
+
+# Suggestions
+please suggest stuff 
+
+i have no creative juice to think of ideas other than what i added in the todo
