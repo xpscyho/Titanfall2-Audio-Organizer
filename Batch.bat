@@ -6,50 +6,66 @@ set /p Input="Input Path:"
 cd /d %Input%
 cd ..\
 set origin=%CD%
-if not exist %origin%\converted_sounds\ mkdir "%origin%\converted_sounds\"
+if exist %origin%\converted_sounds\ (
+    echo %origin%\converted_sounds\ found^^!
+    set /p Overwrite="overwrite?[y/n]"
+) else ( mkdir "%origin%\converted_sounds\" )
 cd "%origin%\converted_sounds\"
 set Conv=%CD%
 if exist "%origin%\log.txt" del "%origin%\log.txt"
 
+cd "%Conv%"
+for /f %%A in ('dir ^| find "File(s)"') do set CompressedTotalfileCount=%%A
 cd "%input%"
 for /f %%A in ('dir ^| find "File(s)"') do set OriginalTotalfileCount=%%A
 
+if %CompressedTotalfileCount%==%OriginalTotalfileCount% (
+    if not %overwrite%==y (
+        echo [Ffmpeg] [ Compressed file count equals original file count! skipping conversion.. ]
+        goto skip
+    )
+)
+cd %input%
+set CompressedTotalfileCount=0
 for %%i in (*) do (
-    cd %input%
 if exist "%Conv%\%%~ni.mp3" ( 
-    set /a CompressedTotalfileCount+=1
-    set /a Percent="((CompressedTotalfileCount*100)/OriginalTotalfileCount)"
-    echo [skip  ][ !CompressedTotalfileCount!/!OriginalTotalfileCount!--!Percent!%% ][ Already Created: %%i ]
-    ) else (    
+    if %Overwrite%==n (
+                        set /a CompressedTotalfileCount+=1
+                set /a Percent="((CompressedTotalfileCount*100)/OriginalTotalfileCount)"
+                echo [skip  ][ !CompressedTotalfileCount!/!OriginalTotalfileCount!--!Percent!%% ][ Already Created: %%~ni.mp3 ]
+        )
+    if %Overwrite%==y (
+
+        ffmpeg -y -i "%%i" -vn -ar 44100 -ac 2 -loglevel quiet -q:a 0 "%Conv%\%%~ni.mp3" 
+                set /a CompressedTotalfileCount+=1
+                set /a Percent="((CompressedTotalfileCount*100)/OriginalTotalfileCount)"
+                echo [FFmpeg][ !CompressedTotalfileCount!/!OriginalTotalfileCount!--!Percent!%% ] [Reconverted] [ %%i ]
+        )
+) else (
         ffmpeg -i "%%i" -vn -ar 44100 -ac 2 -loglevel quiet -q:a 0 "%Conv%\%%~ni.mp3" 
-            cd %Conv%
-               set /a CompressedTotalfileCount+=1
-               set /a Percent="((CompressedTotalfileCount*100)/OriginalTotalfileCount)"
-               echo [FFmpeg][ !CompressedTotalfileCount!/!OriginalTotalfileCount!--!Percent!%% ][ %%i ]
-    ) 
+            set /a CompressedTotalfileCount+=1
+            set /a Percent="((CompressedTotalfileCount*100)/OriginalTotalfileCount)"
+            echo [FFmpeg][ !CompressedTotalfileCount!/!OriginalTotalfileCount!--!Percent!%% ][ %%i ]
+    )
 )
 :skip 
-
+timeout 2
 ::Main split
     cd %Conv%
     if not exist "%origin%\Dialogue" mkdir "%origin%\Dialogue" > NUL
+    if not exist "%origin%\Dialogue_L" mkdir "%origin%\Dialogue_L" > NUL
         set Dialogue="%origin%\Dialogue"
             set /a number=0
         for %%i in (*diag_* *imc* *mcor*) do (
             copy /y %%i %Dialogue% > NUL
             set /a number+=1
-            echo [Split1][ !number!--???%% ][*diag_* *imc* *mcor*][%%i]
-
-
-
-
-
-
-
+            echo [Split1][ !number!--???%% ][*diag_* *imc* *mcor*][ %%i ]
         )
-
-
-
+                for %%i in (*_L2* *_L3* *_L4*) do (
+            copy /y %%i %Dialogue% > NUL
+            set /a number+=1
+            echo [SplitL][ !number!--???%% ][*_L2* *_L3* *_L4*][ %%i ]
+        )
 
 
 ::Titans
@@ -439,6 +455,6 @@ if exist "%Conv%\%%~ni.mp3" (
                     echo [Split ][ .wav ----> .mp3 ] [ %Enemy%.mp3 and %enemy%_multiplayer.mp3 created ]
 :END
 
-                    echo [Done  ][ 99999/99999--100%%][ File conversion complete! ]
+                    echo [Done  ][    100%%     ][ File conversion complete^^! ]
 
     timeout 6
