@@ -31,6 +31,6 @@ the compressed files come up to around 8 GB
 after it compresses the files, my thing will probably keep copying for the organization (WHICH IS NOT EVEN CLOSE TO DONE BTW) im adding it to github for some reason even though its not close to ready to share with other people lmoa
 
 # Suggestions
-please suggest stuff in an issue or dm
+please suggest stuff in an issue
 
 i have no creative juice to think of ideas other than what i added in the todo
