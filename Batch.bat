@@ -20,7 +20,7 @@ cd "%input%"
 for /f %%A in ('dir ^| find "File(s)"') do set OriginalTotalfileCount=%%A
 
 if %CompressedTotalfileCount%==%OriginalTotalfileCount% (
-    if not %overwrite%==y (
+    if not !Overwrite!==y (
         echo [Ffmpeg] [ Compressed file count equals original file count! skipping conversion.. ]
         goto skip
     )
@@ -29,12 +29,12 @@ cd %input%
 set CompressedTotalfileCount=0
 for %%i in (*) do (
 if exist "%Conv%\%%~ni.mp3" ( 
-    if %Overwrite%==n (
+    if !Overwrite!==n (
                         set /a CompressedTotalfileCount+=1
                 set /a Percent="((CompressedTotalfileCount*100)/OriginalTotalfileCount)"
                 echo [skip  ][ !CompressedTotalfileCount!/!OriginalTotalfileCount!--!Percent!%% ][ Already Created: %%~ni.mp3 ]
         )
-    if %Overwrite%==y (
+    if !Overwrite!==y (
 
         ffmpeg -y -i "%%i" -vn -ar 44100 -ac 2 -loglevel quiet -q:a 0 "%Conv%\%%~ni.mp3" 
                 set /a CompressedTotalfileCount+=1
@@ -50,6 +50,7 @@ if exist "%Conv%\%%~ni.mp3" (
 )
 :skip 
 timeout 2
+if not exist "%input%\1wallrun_start_2ch_v3_03.wav" goto END
 ::Main split
     cd %Conv%
     if not exist "%origin%\Dialogue" mkdir "%origin%\Dialogue" > NUL
