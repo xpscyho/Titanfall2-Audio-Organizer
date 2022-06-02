@@ -1,5 +1,8 @@
 # Titanfall2-Audio-Organizer
 very work in progress organizer and converter script
+---
+GUYS GUYS GUYS YOU WONT BELIEVE THIS
+I WROTE THIS SCRIPTWHEN I DIDNT KNOW WHAT A FUNCTION WAS
 # Installation
 The only prerequisite other than windows i can think of is ffmpeg
 i think you can pip install ffmpeg but im not sure 
